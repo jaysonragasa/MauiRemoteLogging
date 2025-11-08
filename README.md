@@ -1,12 +1,12 @@
-![alt text](https://raw.githubusercontent.com/jaysonragasa/MauiRemoteLogging/refs/heads/main/Screenshot%202025-11-09%20005924.png)
-
 # .NET MAUI Remote Log Viewer
+
+[![NuGet version](https://img.shields.io/nuget/v/jaraio.MauiRemoteLoggingClient.svg)](https://www.nuget.org/packages/jaraio.MauiRemoteLoggingClient/)
 
 A high-performance, real-time remote logging solution for .NET MAUI, **perfect for debugging issues in released applications.**
 
 This project streams logs from your app—whether on a test emulator or a user's device—to a standalone desktop server. It allows you to **capture and analyze errors, warnings, and trace information that you can't reproduce in a local debugging session.**
 
-
+![alt text](https://raw.githubusercontent.com/jaysonragasa/MauiRemoteLogging/refs/heads/main/Screenshot%202025-11-09%20005924.png)
 
 ## Key Features
 
@@ -17,7 +17,7 @@ This project streams logs from your app—whether on a test emulator or a user's
 * **Utilities:** Includes line numbers, auto-scroll, clear logs, and export to `.txt`.
 * **Status:** Shows server status (Offline, Running, Error) and port.
 
-### Client (.NET MAUI Service)
+### Client (NuGet Package)
 * **High-Performance & Non-Blocking:** Uses `System.Threading.Channels` for a lock-free, asynchronous producer-consumer pattern. This ensures that logging never blocks your app's UI thread or impacts performance, making it safe for release builds.
 * **Resilient Connection:** Automatically retries connection to the server if it's lost, with configurable delay.
 * **Clean Integration:** Registers and configures the service with a single, clean line in `MauiProgram.cs`.
@@ -31,11 +31,17 @@ This project streams logs from your app—whether on a test emulator or a user's
 4.  Click "Start Server" (default port is 8080).
 
 ### 2. Client (.NET MAUI App)
-1.  Add `RemoteLoggingClientService.cs` to your .NET MAUI project.
-2.  In `MauiProgram.cs`, register the service using the new extension method. This is the only setup required.
 
+1.  **Install the NuGet Package** into your .NET MAUI project:
+    ```bash
+    dotnet add package jaraio.MauiRemoteLoggingClient
+    ```
+    Or add it via the Visual Studio NuGet Package Manager.
+
+2.  In `MauiProgram.cs`, register the service using the extension method.
     ```csharp
-    using MauiRemoteLogging; // Add the namespace for your service
+    // Add the namespace from the package
+    using Jaraio.MauiRemoteLogging; 
 
     public static class MauiProgram
     {
@@ -61,9 +67,9 @@ This project streams logs from your app—whether on a test emulator or a user's
     ```
 
 3.  Inject `IRemoteLoggingClientService` into any ViewModel or service and start logging.
-
     ```csharp
-    using MauiRemoteLogging; // Use the correct namespace
+    // Add the namespace from the package
+    using Jaraio.MauiRemoteLogging; 
 
     public class MyViewModel
     {
@@ -76,7 +82,7 @@ This project streams logs from your app—whether on a test emulator or a user's
 
         public void DoSomething()
         {
-            // Use the new EnqueueLog method
+            // Use the EnqueueLog method
             _logger.EnqueueLog(LogLevel.Info, "MyViewModel", "Button was clicked!", null, "DoSomething");
             
             try
@@ -93,4 +99,4 @@ This project streams logs from your app—whether on a test emulator or a user's
 
 ## Tech Stack
 * **Server:** Electron, Node.js (TCP Server), Tailwind CSS
-* **Client:** .NET C#, `TcpClient`, `System.Threading.Channels`
+* **Client:** .NET, `TcpClient`, `System.Threading.Channels` (via NuGet)
