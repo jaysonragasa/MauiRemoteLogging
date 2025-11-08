@@ -1,3 +1,5 @@
+![alt text](https://raw.githubusercontent.com/jaysonragasa/MauiRemoteLogging/refs/heads/main/Screenshot%202025-11-09%20005924.png)
+
 # .NET MAUI Remote Log Viewer
 
 A high-performance, real-time remote logging solution for .NET MAUI applications.
